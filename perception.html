@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sensor fusion, IMU, DVL, GPS, SLAM에 대한 ranbier의 로보틱스 포트폴리오 페이지."
+    />
+    <title>Perception | Ranbier Robotics</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html">Ranbier Robotics</a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a href="./systems.html">Systems</a>
+          <a href="./navigation.html">Navigation</a>
+          <a class="current" href="./perception.html">Perception</a>
+          <a href="./infrastructure.html">Infrastructure</a>
+          <a href="./troubleshooting.html">Troubleshooting</a>
+          <a href="./insights.html">Insights</a>
+          <a href="./philosophy.html">Philosophy</a>
+        </nav>
+      </header>
+
+      <main class="doc-page">
+        <section class="page-hero">
+          <p class="eyebrow">Perception</p>
+          <h1>센서는 항상 완전하지 않다는 전제로 상태를 추정합니다.</h1>
+          <p class="description">
+            IMU, DVL, GPS, EKF, dead reckoning, 그리고 수중 환경에서의 SLAM 한계까지 다룹니다.
+            이 영역의 핵심은 더 좋은 센서를 찾는 것보다 센서 공백을 어떻게 모델로 메울지 고민하는
+            데 있습니다.
+          </p>
+        </section>
+
+        <section class="article-layout">
+          <aside class="sidebar-note">
+            <p class="section-kicker">On This Page</p>
+            <ul class="plain-list">
+              <li>왜 sensor fusion이 필요한가</li>
+              <li>IMU, DVL, GPS 역할</li>
+              <li>EKF, prediction, dead reckoning</li>
+              <li>Pixhawk vs ROS EKF</li>
+            </ul>
+          </aside>
+
+          <div class="content-stack">
+            <article class="content-block">
+              <p class="section-kicker">Problem Setting</p>
+              <h2>GPS는 느리고, controller는 빠르며, 수중에서는 GPS가 사라집니다.</h2>
+              <p>
+                perception과 estimation을 다룰 때 가장 먼저 고려해야 하는 것은 센서 주기와 사용
+                가능성의 차이입니다. GPS는 절대 위치 보정에는 좋지만 저주기이고, 수중에서는 아예
+                쓸 수 없습니다. 반면 controller는 더 높은 주기로 현재 상태를 필요로 합니다.
+                그래서 센서가 비는 구간을 prediction과 모델 기반 추정으로 메워야 합니다.
+              </p>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Sensors</p>
+              <h2>각 센서는 다르게 불완전하고, 그래서 서로를 보완해야 합니다.</h2>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <strong>IMU</strong>
+                  <p>고주기 입력을 제공하지만 bias와 drift 누적이 크기 때문에 단독 사용에는 한계가 있습니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>DVL</strong>
+                  <p>수중 속도 측정에 유용하지만 altitude와 바닥 반사 조건의 영향을 받습니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>GPS</strong>
+                  <p>절대 위치 보정에 강하지만 저주기이며, 수중 환경에서는 직접 사용할 수 없습니다.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Estimation</p>
+              <h2>EKF와 prediction은 센서 공백을 버티기 위한 도구입니다.</h2>
+              <p>
+                EKF는 position, velocity, orientation 같은 상태를 추정하는 데 유용하지만,
+                모든 문제를 해결해 주지는 않습니다. 특히 dead reckoning 기반 구성에서는 DVL과 IMU를
+                조합해도 drift가 쌓입니다. 그래서 중요한 것은 drift를 없앨 수 있다고 믿는 것이
+                아니라, drift가 생겨도 시스템 전체가 버틸 수 있게 만드는 것입니다.
+              </p>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>항목</th>
+                      <th>Pixhawk EKF</th>
+                      <th>ROS EKF</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>안정성</td>
+                      <td>높음</td>
+                      <td>중간</td>
+                    </tr>
+                    <tr>
+                      <td>유연성</td>
+                      <td>낮음</td>
+                      <td>높음</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                실제 운용에서는 Pixhawk EKF를 기본 축으로 두고, 필요할 때 ROS 쪽에서 추가 추정
+                또는 후처리 레이어를 더하는 방식이 현실적입니다.
+              </p>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">SLAM</p>
+              <h2>수중 SLAM은 가능하지만, 환경 영향과 해상도 한계를 같이 봐야 합니다.</h2>
+              <p>
+                LiDAR는 정확도가 높지만 수중에서 직접 쓰기 어렵고, sonar는 수중에서 사용할 수 있지만
+                해상도와 환경 의존성이 큽니다. 그래서 수중 SLAM은 가능성 자체보다, 어떤 환경에서
+                어느 정도 품질이 나오는지를 냉정하게 보는 게 중요합니다.
+              </p>
+              <div class="note-box">
+                <strong>핵심 인사이트</strong>
+                <p>
+                  perception의 핵심은 더 많은 센서를 붙이는 것이 아니라, 센서가 빠지거나 흔들려도
+                  상태 추정이 끊기지 않도록 prediction과 구조를 설계하는 데 있습니다.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a href="./navigation.html">이전: Navigation</a>
+          <a href="./infrastructure.html">다음: Infrastructure</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

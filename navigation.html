@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Waypoint system, path planning, control에 대한 ranbier의 로보틱스 포트폴리오 페이지."
+    />
+    <title>Navigation | Ranbier Robotics</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html">Ranbier Robotics</a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a href="./systems.html">Systems</a>
+          <a class="current" href="./navigation.html">Navigation</a>
+          <a href="./perception.html">Perception</a>
+          <a href="./infrastructure.html">Infrastructure</a>
+          <a href="./troubleshooting.html">Troubleshooting</a>
+          <a href="./insights.html">Insights</a>
+          <a href="./philosophy.html">Philosophy</a>
+        </nav>
+      </header>
+
+      <main class="doc-page">
+        <section class="page-hero">
+          <p class="eyebrow">Navigation</p>
+          <h1>경로를 만드는 것보다, 경로를 어떻게 사용할지가 더 중요합니다.</h1>
+          <p class="description">
+            Navigation 영역에서는 waypoint 관리, local path 생성, planner와 controller 분리,
+            그리고 PID/MPC 관점을 하나의 흐름으로 다룹니다. 핵심은 경로 데이터를 재사용 가능한
+            구조로 설계하는 것입니다.
+          </p>
+        </section>
+
+        <section class="article-layout">
+          <aside class="sidebar-note">
+            <p class="section-kicker">On This Page</p>
+            <ul class="plain-list">
+              <li>WaypointManager 설계</li>
+              <li>Local path와 loop 처리</li>
+              <li>Path planning과 control의 연결</li>
+              <li>튜닝과 구조의 관계</li>
+            </ul>
+          </aside>
+
+          <div class="content-stack">
+            <article class="content-block">
+              <p class="section-kicker">Waypoint System</p>
+              <h2>완전 재설계의 목적은 재사용 가능한 인터페이스를 만드는 것입니다.</h2>
+              <p>
+                기존 경로 코드를 부분 수정하는 대신 WaypointManager 중심 구조로 다시 잡으면,
+                planner나 controller가 경로를 어떻게 소비할지 더 명확하게 설계할 수 있습니다.
+                핵심은 현재 위치 기준으로 가장 가까운 waypoint를 찾고, 필요한 길이만큼 local path를
+                잘라서 넘겨주는 기능을 단순한 인터페이스로 제공하는 것입니다.
+              </p>
+              <pre><code>class WaypointManager {
+public:
+    int findClosestWaypoint(const Pose&amp; current_pose);
+    std::vector&lt;Pose&gt; extractLocalPath(int start_index, int size);
+    Pose getWaypoint(int index);
+};</code></pre>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Practical Use</p>
+              <h2>Local path와 loop 지원은 실제 운용에서 바로 필요해집니다.</h2>
+              <p>
+                전체 경로를 매번 모두 사용할 필요는 없습니다. controller가 따라가야 하는 구간만
+                잘라서 넘기는 local path 방식이 계산량과 제어 안정성을 모두 고려하기 좋습니다.
+                또한 반복 경로가 필요한 경우 끝과 시작을 자연스럽게 연결하는 loop 지원이 중요합니다.
+              </p>
+              <ul class="plain-list">
+                <li>closest waypoint 탐색으로 현재 기준점을 고정합니다.</li>
+                <li>고정 길이 local path를 제공해 controller 입력을 단순화합니다.</li>
+                <li>반복 주행이 필요한 시나리오에서는 loop 연결이 필수입니다.</li>
+              </ul>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Planning and Control</p>
+              <h2>계획과 제어는 분리하되, 서로 무관하게 보면 안 됩니다.</h2>
+              <p>
+                path planning은 목적지까지 가는 선을 찾는 작업이지만, control은 그 선을 실제로
+                따라갈 수 있는지를 결정합니다. 그래서 planner가 너무 급격한 곡률이나 불안정한
+                경로를 만들면 controller가 아무리 좋아도 실제 시스템에서는 흔들리게 됩니다.
+              </p>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <strong>PID</strong>
+                  <p>간단하고 직관적이지만, 튜닝이 성능의 대부분을 결정합니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>MPC</strong>
+                  <p>제약 조건과 동역학을 더 잘 다룰 수 있지만 계산량이 늘어납니다.</p>
+                </div>
+              </div>
+              <div class="note-box">
+                <strong>핵심 인사이트</strong>
+                <p>
+                  경로 데이터 자체보다 중요한 것은 그 경로를 system 안에서 어떻게 소비하고,
+                  controller에 어떤 형태로 넘겨줄 것인가입니다.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a href="./systems.html">이전: Systems</a>
+          <a href="./perception.html">다음: Perception</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Engineering insights, mistakes, patterns를 정리한 ranbier의 로보틱스 포트폴리오 페이지."
+    />
+    <title>Insights | Ranbier Robotics</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html">Ranbier Robotics</a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a href="./systems.html">Systems</a>
+          <a href="./navigation.html">Navigation</a>
+          <a href="./perception.html">Perception</a>
+          <a href="./infrastructure.html">Infrastructure</a>
+          <a href="./troubleshooting.html">Troubleshooting</a>
+          <a class="current" href="./insights.html">Insights</a>
+          <a href="./philosophy.html">Philosophy</a>
+        </nav>
+      </header>
+
+      <main class="doc-page">
+        <section class="page-hero">
+          <p class="eyebrow">Insights</p>
+          <h1>반복해서 배우게 되는 것들을 따로 모아두는 이유</h1>
+          <p class="description">
+            개별 기술 문서와 별개로, 프로젝트를 거치며 반복해서 확인하게 되는 관찰과 실수 패턴을
+            따로 모아두면 다음 시스템을 설계할 때 판단 속도가 훨씬 빨라집니다.
+          </p>
+        </section>
+
+        <section class="article-layout">
+          <aside class="sidebar-note">
+            <p class="section-kicker">On This Page</p>
+            <ul class="plain-list">
+              <li>Engineering insights</li>
+              <li>반복되는 mistakes</li>
+              <li>문제를 푸는 patterns</li>
+            </ul>
+          </aside>
+
+          <div class="content-stack">
+            <article class="content-block">
+              <p class="section-kicker">Engineering Insights</p>
+              <h2>좋은 추정기 하나가 모든 문제를 해결해 주지는 않습니다.</h2>
+              <p>
+                EKF는 강력한 도구지만 drift를 완전히 없애 주지는 않습니다. 센서 공백도 반드시
+                생기고, 구조 설계가 빈약하면 좋은 필터를 써도 시스템 전체는 흔들립니다. 그리고
+                실제 현장 문제는 생각보다 자주 Docker, ROS, 네트워크 같은 환경에서 시작됩니다.
+              </p>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Mistakes</p>
+              <h2>반복되는 실수의 공통점은 시스템 전체 흐름을 놓친다는 데 있습니다.</h2>
+              <ul class="plain-list">
+                <li>센서가 항상 정상적으로 들어온다고 가정함</li>
+                <li>구조 문제보다 튜닝 문제부터 의심함</li>
+                <li>인프라 문제를 알고리즘 문제로 착각함</li>
+                <li>좌표계와 reference frame 확인을 뒤로 미룸</li>
+              </ul>
+              <p>
+                이 실수들은 대부분 한 레이어만 보고 시스템을 판단할 때 발생합니다. 그래서
+                문제가 생기면 다시 전체 흐름으로 돌아가는 습관이 중요합니다.
+              </p>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Patterns</p>
+              <h2>반복해서 통하는 패턴은 언제나 데이터 흐름을 먼저 보는 것입니다.</h2>
+              <ol class="flow-list">
+                <li>문제가 생긴 지점을 추측하기보다 데이터가 실제로 흐르는지 확인합니다.</li>
+                <li>센서 -> 상태 -> 제어 순서로 레이어를 하나씩 점검합니다.</li>
+                <li>가능하면 시각화와 로그를 같이 사용해 눈으로 확인합니다.</li>
+              </ol>
+              <div class="note-box">
+                <strong>핵심 인사이트</strong>
+                <p>
+                  시스템 이해도는 새로운 알고리즘을 아는 것보다, 반복되는 실수와 패턴을 어떻게
+                  정리해 두었는지에서 더 빠르게 쌓이기도 합니다.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a href="./troubleshooting.html">이전: Troubleshooting</a>
+          <a href="./philosophy.html">다음: Philosophy</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="System architecture, AUV system design, autonomy stack에 대한 ranbier의 로보틱스 포트폴리오 페이지."
+    />
+    <title>Systems | Ranbier Robotics</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html">Ranbier Robotics</a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a class="current" href="./systems.html">Systems</a>
+          <a href="./navigation.html">Navigation</a>
+          <a href="./perception.html">Perception</a>
+          <a href="./infrastructure.html">Infrastructure</a>
+          <a href="./troubleshooting.html">Troubleshooting</a>
+          <a href="./insights.html">Insights</a>
+          <a href="./philosophy.html">Philosophy</a>
+        </nav>
+      </header>
+
+      <main class="doc-page">
+        <section class="page-hero">
+          <p class="eyebrow">Systems</p>
+          <h1>전체 시스템을 어떻게 나누고 연결할 것인가</h1>
+          <p class="description">
+            로봇 시스템은 개별 센서나 알고리즘보다 각 레이어가 어떤 책임을 가지고 어떻게
+            연결되는지가 더 중요합니다. 이 페이지는 architecture, AUV system, autonomy stack을
+            하나의 흐름으로 설명합니다.
+          </p>
+        </section>
+
+        <section class="article-layout">
+          <aside class="sidebar-note">
+            <p class="section-kicker">On This Page</p>
+            <ul class="plain-list">
+              <li>System Architecture</li>
+              <li>AUV 환경에서의 제약</li>
+              <li>Autonomy Stack 설계 원칙</li>
+              <li>실전에서 구조가 중요한 이유</li>
+            </ul>
+          </aside>
+
+          <div class="content-stack">
+            <article class="content-block">
+              <p class="section-kicker">Architecture</p>
+              <h2>기본 흐름은 Sensor -> Estimation -> Planning -> Control -> Actuation</h2>
+              <p>
+                시스템을 이 순서로 나누면 데이터가 어디에서 생성되고, 어떤 지점에서 상태가
+                바뀌며, 어떤 레이어가 의사결정을 담당하는지 명확해집니다. 중요한 건 이 흐름이
+                한 줄짜리 다이어그램으로 끝나지 않고, 각 레이어가 독립적으로 교체 가능해야 한다는 점입니다.
+              </p>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <strong>Sensor Layer</strong>
+                  <p>IMU, DVL, GPS 같은 원시 입력을 수집합니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>Estimation Layer</strong>
+                  <p>EKF를 통해 현재 상태를 추정하고 prediction을 수행합니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>Planning Layer</strong>
+                  <p>Waypoint와 local path를 바탕으로 추종 가능한 경로를 만듭니다.</p>
+                </div>
+                <div class="mini-card">
+                  <strong>Control Layer</strong>
+                  <p>오차를 입력으로 받아 실제 움직임으로 변환합니다.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">AUV System</p>
+              <h2>수중 환경에서는 완전한 위치 정보를 기대할 수 없습니다.</h2>
+              <p>
+                AUV에서는 GPS를 계속 사용할 수 없고, 외부 참조 센서도 제한적입니다. 그래서
+                DVL과 IMU를 중심으로 dead reckoning을 구성하게 되는데, 이때 drift는 피할 수 없는
+                조건이 됩니다. 결국 목표는 완벽한 위치 추정이 아니라, 불완전한 추정치를 견디는
+                시스템을 만드는 것입니다.
+              </p>
+              <ul class="plain-list">
+                <li>수중에서는 GPS 부재를 기본 전제로 둡니다.</li>
+                <li>DVL과 IMU가 위치 추정의 중심 역할을 합니다.</li>
+                <li>drift 누적을 완전히 없애기보다 관리 가능한 수준으로 다뤄야 합니다.</li>
+              </ul>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Autonomy Stack</p>
+              <h2>중요한 것은 기능 나열이 아니라 레이어 간 책임 분리입니다.</h2>
+              <p>
+                autonomy stack을 설계할 때는 planner, controller, estimator가 서로의 세부 구현을
+                너무 많이 알지 않도록 경계를 잡아야 합니다. 그래야 센서가 바뀌거나 제어기가
+                달라져도 전체 시스템을 다시 뜯어고치지 않아도 됩니다.
+              </p>
+              <div class="note-box">
+                <strong>핵심 인사이트</strong>
+                <p>
+                  성능 문제처럼 보이는 많은 이슈가 사실은 구조 문제인 경우가 많습니다. 센서 교체,
+                  디버깅, 재사용성을 생각한다면 느슨한 결합이 가장 먼저 와야 합니다.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a href="./index.html">Home으로 돌아가기</a>
+          <a href="./navigation.html">다음: Navigation</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --bg-top: #f4eadb;
-  --bg-bottom: #dce8e4;
-  --surface: rgba(255, 248, 239, 0.66);
-  --surface-strong: rgba(255, 252, 247, 0.82);
-  --text: #122033;
-  --muted: #5b6775;
-  --accent: #dd6a42;
-  --accent-deep: #8c2d1e;
-  --accent-soft: #ffd5ad;
-  --line: rgba(18, 32, 51, 0.1);
-  --shadow: 0 24px 60px rgba(18, 32, 51, 0.12);
+  --bg-top: #f3ede4;
+  --bg-bottom: #d9e8e2;
+  --surface: rgba(255, 252, 247, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.86);
+  --text: #162333;
+  --muted: #596779;
+  --accent: #d6633f;
+  --accent-deep: #893020;
+  --accent-soft: #ffd9bb;
+  --line: rgba(22, 35, 51, 0.1);
+  --shadow: 0 24px 60px rgba(22, 35, 51, 0.12);
 }
 
 * {
@@ -37,6 +37,13 @@ a {
   color: inherit;
 }
 
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
 .page-shell {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
@@ -45,8 +52,10 @@ a {
 
 .site-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1.2rem 0;
   position: sticky;
   top: 0;
@@ -66,9 +75,19 @@ a {
 
 .site-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.2rem;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.site-nav a {
+  padding-bottom: 0.2rem;
+}
+
+.site-nav a.current {
+  color: var(--accent-deep);
+  border-bottom: 2px solid var(--accent);
 }
 
 .eyebrow {
@@ -89,12 +108,26 @@ h1 {
   letter-spacing: -0.03em;
 }
 
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 1.18rem;
+  line-height: 1.35;
+}
+
 .description {
   max-width: 38rem;
   margin: 1.5rem 0 0;
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--muted);
+}
+
+.description.compact {
+  margin-top: 0.8rem;
 }
 
 .hero-points {
@@ -123,7 +156,14 @@ h1 {
   background: linear-gradient(135deg, var(--accent), var(--accent-soft));
 }
 
-.hero {
+main,
+.doc-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero,
+.page-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
   gap: 1.5rem;
@@ -133,10 +173,13 @@ h1 {
 
 .hero-copy,
 .hero-panel,
-.feature,
+.card,
+.domain-card,
 .contact,
 .philosophy-card,
-.kb-card {
+.content-block,
+.sidebar-note,
+.page-hero {
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   backdrop-filter: blur(16px);
@@ -159,6 +202,13 @@ h1 {
   color: #f8f1e8;
 }
 
+.page-hero {
+  grid-template-columns: 1fr;
+  padding: 2.2rem;
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(255, 249, 242, 0.82), rgba(255, 255, 255, 0.45));
+}
+
 .panel-label,
 .section-kicker {
   margin: 0 0 0.8rem;
@@ -170,26 +220,6 @@ h1 {
 
 .panel-label {
   color: var(--accent-soft);
-}
-
-.orbit {
-  position: absolute;
-  border: 1px solid rgba(255, 213, 173, 0.28);
-  border-radius: 50%;
-}
-
-.orbit-a {
-  width: 320px;
-  height: 320px;
-  top: -60px;
-  right: -100px;
-}
-
-.orbit-b {
-  width: 220px;
-  height: 220px;
-  bottom: -70px;
-  left: -70px;
 }
 
 .hero-stat {
@@ -252,54 +282,123 @@ h1 {
   border: 1px solid var(--line);
 }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
-  gap: 1rem;
-  margin-top: 1rem;
+.button.secondary:hover,
+.domain-card:hover,
+.card:hover {
+  border-color: rgba(214, 99, 63, 0.35);
 }
 
-.feature {
+.summary-grid,
+.domain-grid,
+.mini-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.domain-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mini-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.section-block {
+  display: grid;
+  gap: 1rem;
+}
+
+.section-header {
+  padding: 1rem 0 0;
+}
+
+.card,
+.domain-card {
+  padding: 1.8rem;
+  border-radius: 30px;
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.card p:last-child,
+.domain-card p:last-child,
+.content-block p:last-child,
+.sidebar-note ul:last-child {
+  margin-bottom: 0;
+}
+
+.domain-card {
+  background:
+    radial-gradient(circle at top right, rgba(214, 99, 63, 0.14), transparent 30%),
+    var(--surface-strong);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.domain-card:hover {
+  transform: translateY(-2px);
+}
+
+.card-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+.article-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+}
+
+.sidebar-note,
+.content-block {
   padding: 1.8rem;
   border-radius: 30px;
   background: var(--surface);
 }
 
-.feature-large {
-  background:
-    radial-gradient(circle at top right, rgba(221, 106, 66, 0.16), transparent 28%),
-    var(--surface-strong);
+.content-stack {
+  display: grid;
+  gap: 1rem;
 }
 
-.feature h2,
-.approach h2,
-.contact h2,
-.timeline-item h3 {
-  margin: 0;
+.plain-list,
+.flow-list {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
-.feature p,
-.timeline-item p {
+.plain-list li + li,
+.flow-list li + li {
+  margin-top: 0.35rem;
+}
+
+.mini-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.mini-card p {
   margin-bottom: 0;
+}
+
+.content-block p,
+.card p,
+.domain-card p,
+.mini-card p,
+.sidebar-note p,
+.philosophy-card p {
   line-height: 1.75;
   color: var(--muted);
-}
-
-.profile-strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.profile-card {
-  padding: 1.6rem;
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(255, 253, 249, 0.78), rgba(255, 247, 239, 0.52));
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
 }
 
 .mini-label {
@@ -312,101 +411,78 @@ h1 {
   color: var(--accent-deep);
 }
 
-.profile-card strong {
-  display: block;
-  font-size: 1.15rem;
-}
-
-.profile-card p {
-  margin: 0.9rem 0 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.philosophy-block,
-.knowledge-base {
-  margin-top: 1rem;
-}
-
-.philosophy-intro,
-.philosophy-grid,
-.kb-grid {
+.philosophy-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.philosophy-intro {
-  padding: 2rem;
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
+.philosophy-grid.wide {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.philosophy-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-top: 1rem;
-}
-
-.philosophy-card,
-.kb-card {
+.philosophy-card {
   padding: 1.5rem;
   border-radius: 28px;
   background: linear-gradient(180deg, rgba(255, 253, 249, 0.78), rgba(255, 247, 239, 0.52));
 }
 
-.philosophy-card h3,
-.kb-card h3 {
-  margin: 0;
+.note-box {
+  margin-top: 1.2rem;
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(214, 99, 63, 0.16);
+  background: rgba(255, 229, 208, 0.45);
 }
 
-.philosophy-card p,
-.kb-card p {
-  margin: 0.9rem 0 0;
-  line-height: 1.7;
-  color: var(--muted);
+.note-box strong {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
-.kb-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+pre {
+  overflow-x: auto;
+  margin: 1rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  background: #182433;
+  color: #f6efe5;
+}
+
+code {
+  font-family: "SFMono-Regular", "Menlo", monospace;
+  font-size: 0.92rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
   margin-top: 1rem;
 }
 
-.approach {
-  display: grid;
-  grid-template-columns: 280px 1fr;
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.9rem 0.95rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 1rem;
-  margin-top: 1rem;
-  align-items: start;
+  padding-top: 0.5rem;
 }
 
-.approach-intro,
-.timeline {
-  padding: 2rem;
-  border-radius: 30px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
-}
-
-.timeline-item {
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  gap: 1rem;
-}
-
-.timeline-item + .timeline-item {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.timeline-index {
-  font-family: "Instrument Serif", serif;
-  font-size: 2rem;
+.pager a {
+  text-decoration: none;
   color: var(--accent-deep);
+  font-weight: 700;
 }
 
 .contact {
@@ -433,11 +509,12 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .feature-grid,
-  .approach,
-  .profile-strip,
+  .summary-grid,
+  .domain-grid,
+  .mini-grid,
+  .article-layout,
   .philosophy-grid,
-  .kb-grid {
+  .philosophy-grid.wide {
     grid-template-columns: 1fr;
   }
 }
@@ -448,31 +525,26 @@ h1 {
   }
 
   .site-header,
-  .contact,
-  .timeline-item {
-    grid-template-columns: 1fr;
-  }
-
-  .site-header,
   .site-nav,
   .contact {
     display: grid;
     justify-content: stretch;
   }
 
-  .hero {
+  .hero,
+  .page-hero {
     padding-top: 1.5rem;
   }
 
   .hero-copy,
   .hero-panel,
-  .feature,
-  .approach-intro,
-  .timeline,
   .contact,
-  .philosophy-intro,
   .philosophy-card,
-  .kb-card {
+  .card,
+  .domain-card,
+  .content-block,
+  .sidebar-note,
+  .page-hero {
     padding: 1.4rem;
     border-radius: 24px;
   }
@@ -497,9 +569,5 @@ h1 {
   .hero-stat {
     grid-template-columns: 1fr;
     gap: 0.4rem;
-  }
-
-  .timeline-item {
-    grid-template-columns: 1fr;
   }
 }

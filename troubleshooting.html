@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ROS, build, runtime 문제를 다루는 ranbier의 troubleshooting 포트폴리오 페이지."
+    />
+    <title>Troubleshooting | Ranbier Robotics</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./index.html">Ranbier Robotics</a>
+        <nav class="site-nav">
+          <a href="./index.html">Home</a>
+          <a href="./systems.html">Systems</a>
+          <a href="./navigation.html">Navigation</a>
+          <a href="./perception.html">Perception</a>
+          <a href="./infrastructure.html">Infrastructure</a>
+          <a class="current" href="./troubleshooting.html">Troubleshooting</a>
+          <a href="./insights.html">Insights</a>
+          <a href="./philosophy.html">Philosophy</a>
+        </nav>
+      </header>
+
+      <main class="doc-page">
+        <section class="page-hero">
+          <p class="eyebrow">Troubleshooting</p>
+          <h1>문제를 푸는 순서까지 기술 자산으로 남기는 방식</h1>
+          <p class="description">
+            실전에서는 ROS 통신 실패, 빌드 에러, 런타임 이상 동작이 반복됩니다. 중요한 건 문제가
+            있었다는 사실보다 어떤 순서로 확인했고, 어떤 패턴이 반복되었는지 남기는 것입니다.
+          </p>
+        </section>
+
+        <section class="article-layout">
+          <aside class="sidebar-note">
+            <p class="section-kicker">On This Page</p>
+            <ul class="plain-list">
+              <li>ROS 통신 문제</li>
+              <li>Build 환경 문제</li>
+              <li>Runtime 문제</li>
+              <li>반복 가능한 점검 패턴</li>
+            </ul>
+          </aside>
+
+          <div class="content-stack">
+            <article class="content-block">
+              <p class="section-kicker">ROS</p>
+              <h2>통신 실패는 네트워크, 포트, 설정 중 하나일 가능성이 큽니다.</h2>
+              <p>
+                토픽이 안 보이거나 노드 간 메시지가 전달되지 않을 때는 곧바로 복잡한 원인을
+                가정하기보다, publish 여부, 네임스페이스, DDS 환경, 방화벽 상태를 먼저 확인합니다.
+              </p>
+              <ul class="plain-list">
+                <li>실제로 데이터가 publish 되는지 확인합니다.</li>
+                <li>포트 충돌과 방화벽 여부를 점검합니다.</li>
+                <li>네임스페이스와 lifecycle 상태를 확인합니다.</li>
+              </ul>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Build</p>
+              <h2>에러 메시지의 첫 원인을 끝까지 추적해야 합니다.</h2>
+              <p>
+                빌드 실패는 종종 마지막 줄만 보면 더 복잡해 보입니다. 실제로는 의존성 누락,
+                환경 변수 문제, workspace sourcing 누락처럼 기본적인 문제가 대부분입니다.
+              </p>
+              <ol class="flow-list">
+                <li>에러 메시지의 가장 첫 원인부터 다시 읽습니다.</li>
+                <li>의존성이 설치되어 있는지 확인합니다.</li>
+                <li>환경 변수와 sourcing 순서를 점검합니다.</li>
+              </ol>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Runtime</p>
+              <h2>실행은 되지만 이상하게 동작할 때는 데이터 흐름을 다시 봐야 합니다.</h2>
+              <p>
+                런타임 문제는 특히 좌표계 혼동, 센서 주기 mismatch, 입력 단절 같은 형태로 자주
+                나타납니다. 이 경우 상태 추정이 먼저 흔들리는지, 제어 출력이 과하게 반응하는지,
+                입력 자체가 비어 있는지를 순서대로 봐야 합니다.
+              </p>
+            </article>
+
+            <article class="content-block">
+              <p class="section-kicker">Pattern</p>
+              <h2>가장 반복 가능한 디버깅 흐름은 센서 -> 상태 -> 제어 순서입니다.</h2>
+              <p>
+                문제를 풀 때는 한 번에 전체를 보려고 하기보다, 입력에서 출력으로 데이터가 이동하는
+                경로를 고정된 순서로 점검하는 편이 훨씬 안정적입니다.
+              </p>
+              <ol class="flow-list">
+                <li>센서 입력이 정상인지 확인</li>
+                <li>상태 추정 결과가 기대 범위에 있는지 확인</li>
+                <li>제어 출력이 과하거나 비어 있지 않은지 확인</li>
+                <li>시각화와 로그로 병목 위치 확인</li>
+              </ol>
+              <div class="note-box">
+                <strong>핵심 인사이트</strong>
+                <p>
+                  troubleshooting은 부가 작업이 아니라 시스템 이해도를 올리는 가장 직접적인 과정입니다.
+                  잘 기록된 문제 해결 흐름은 다음 프로젝트에서 재사용 가능한 자산이 됩니다.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a href="./infrastructure.html">이전: Infrastructure</a>
+          <a href="./insights.html">다음: Insights</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
