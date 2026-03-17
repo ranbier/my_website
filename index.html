@@ -3,39 +3,142 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My First Website</title>
+    <meta
+      name="description"
+      content="감각적인 정적 웹사이트 스타터. 아이디어, 프로젝트, 작업 방식을 한 페이지에 담은 개인 랜딩 페이지."
+    />
+    <title>Ranbier Studio</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="hero">
-      <p class="eyebrow">GitHub connected website starter</p>
-      <h1>내 웹사이트를 시작해보자</h1>
-      <p class="description">
-        이 페이지는 바로 수정해서 사용할 수 있는 기본 시작점입니다. 제목, 소개 문구,
-        버튼 링크만 바꿔도 간단한 개인 사이트로 쓸 수 있어요.
-      </p>
-      <div class="actions">
-        <a class="button primary" href="https://github.com/" target="_blank" rel="noreferrer">
-          GitHub 보기
-        </a>
-        <a class="button secondary" href="#about">소개 보기</a>
-      </div>
-    </main>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top">Ranbier Studio</a>
+        <nav class="site-nav">
+          <a href="#work">Work</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
 
-    <section class="about" id="about">
-      <div class="card">
-        <h2>어떻게 수정하면 되나요?</h2>
-        <p>
-          <code>index.html</code>에서 글자를 바꾸고, <code>styles.css</code>에서 색상과
-          레이아웃을 조정하면 됩니다.
-        </p>
-      </div>
-      <div class="card">
-        <h2>다음 단계</h2>
-        <p>
-          GitHub 저장소를 연결한 뒤 커밋하고 푸시하면 배포 준비가 거의 끝납니다.
-        </p>
-      </div>
-    </section>
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Independent maker • based online</p>
+            <h1>차분하지만 선명한 웹 경험을 만듭니다.</h1>
+            <p class="description">
+              아이디어를 빠르게 화면으로 옮기고, 복잡한 내용도 읽기 쉬운 형태로 정리하는
+              작업을 좋아합니다. 이 페이지는 Ranbier의 온라인 명함이자, 곧바로 배포 가능한
+              웹사이트 출발점입니다.
+            </p>
+            <div class="actions">
+              <a
+                class="button primary"
+                href="https://github.com/ranbier/my_website"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub 프로젝트 보기
+              </a>
+              <a class="button secondary" href="#work">무엇을 하는지 보기</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <p class="panel-label">Now Building</p>
+            <div class="orbit orbit-a"></div>
+            <div class="orbit orbit-b"></div>
+            <div class="hero-stat">
+              <strong>01</strong>
+              <span>정적 사이트, 빠른 로딩, 간결한 구조</span>
+            </div>
+            <div class="hero-stat">
+              <strong>02</strong>
+              <span>GitHub와 연결된 업데이트 흐름</span>
+            </div>
+            <div class="hero-stat">
+              <strong>03</strong>
+              <span>Cloudflare Pages로 이어질 배포 준비</span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="feature-grid" id="work">
+          <article class="feature feature-large">
+            <p class="section-kicker">Selected Focus</p>
+            <h2>작고 분명한 사이트가 더 오래 기억됩니다.</h2>
+            <p>
+              과한 장식보다 흐름, 위계, 인상을 먼저 설계합니다. 방문자는 무엇을 하는
+              사람인지 바로 이해하고, 필요한 행동으로 자연스럽게 이동할 수 있어야 하니까요.
+            </p>
+          </article>
+
+          <article class="feature">
+            <p class="section-kicker">Identity</p>
+            <h2>브랜드처럼 보이는 개인 페이지</h2>
+            <p>
+              소개 문장, 프로젝트 링크, 연락 동선까지 한 톤으로 맞춰서 혼자 운영해도
+              정돈된 인상을 주도록 구성했습니다.
+            </p>
+          </article>
+
+          <article class="feature">
+            <p class="section-kicker">System</p>
+            <h2>수정하기 쉬운 기본 구조</h2>
+            <p>
+              HTML과 CSS만으로 구성해 복잡한 설정 없이도 문구, 컬러, 섹션 순서를 바로 바꿀
+              수 있습니다.
+            </p>
+          </article>
+        </section>
+
+        <section class="approach" id="approach">
+          <div class="approach-intro">
+            <p class="section-kicker">Approach</p>
+            <h2>만드는 방식</h2>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-item">
+              <span class="timeline-index">01</span>
+              <div>
+                <h3>메시지를 먼저 정리</h3>
+                <p>방문자가 5초 안에 이해할 핵심 문장을 먼저 세웁니다.</p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-index">02</span>
+              <div>
+                <h3>시선 흐름 설계</h3>
+                <p>제목, 설명, 행동 버튼, 보조 정보가 자연스럽게 읽히게 배치합니다.</p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-index">03</span>
+              <div>
+                <h3>바로 배포 가능한 상태로 정리</h3>
+                <p>GitHub와 Pages에 연결하기 쉬운 가벼운 구조로 마무리합니다.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="contact" id="contact">
+          <div>
+            <p class="section-kicker">Contact</p>
+            <h2>다음 업데이트는 GitHub 푸시 한 번이면 충분합니다.</h2>
+          </div>
+          <a
+            class="button primary"
+            href="mailto:kimss6240@gmail.com"
+            aria-label="이메일 보내기"
+          >
+            kimss6240@gmail.com
+          </a>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
