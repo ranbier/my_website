@@ -638,3 +638,26 @@ code {
     align-items: flex-start;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  body.is-page-leaving {
+    overflow: hidden;
+  }
+
+  body.is-page-leaving .page-shell {
+    animation: page-exit 260ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+}
+
+@keyframes page-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(3px);
+  }
+}
