@@ -440,7 +440,13 @@ main {
 .about-preview .text-link {
   margin-top: 20px;
 }
+main:has(> .contact-cta) {
+  display: flex;
+  flex-direction: column;
+}
 .contact-cta {
+  margin-top: auto;
+  flex-shrink: 0;
   padding-block: 12px 36px;
 }
 .cta-row {
