@@ -30,6 +30,7 @@
   --mono: "IBM Plex Mono", monospace;
   --nav-height: 88px;
   --section: 56px;
+  --footer-height: 140px;
 }
 [data-theme="light"] {
   color-scheme: light;
@@ -47,9 +48,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 112px;
+  scroll-padding-bottom: calc(var(--footer-height) + 16px);
 }
 body {
   margin: 0;
+  min-height: 100svh;
+  padding-bottom: var(--footer-height);
   background: var(--bg);
   color: var(--text);
   font: 15px/1.7 var(--sans);
@@ -776,6 +780,13 @@ main {
 .not-found .button {
   margin-top: 32px;
 }
+.footer {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 20;
+  background: var(--bg);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
 .footer-top {
   border-top: 1px solid var(--border);
   padding-top: 24px;
@@ -804,7 +815,7 @@ main {
 }
 .toast {
   position: fixed;
-  bottom: 24px;
+  bottom: calc(var(--footer-height) + 16px);
   left: 50%;
   transform: translate(-50%, 12px);
   opacity: 0;
@@ -890,6 +901,7 @@ main {
 @media (max-width: 600px) {
   :root {
     --section: 40px;
+    --footer-height: 200px;
   }
   .container {
     width: calc(100% - 48px);

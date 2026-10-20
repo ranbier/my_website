@@ -95,6 +95,21 @@ const menuButton = document.querySelector(".menu-toggle");
 const mobileMenu = document.querySelector("#mobile-menu");
 const main = document.querySelector("main");
 const footer = document.querySelector("footer");
+// Reserve the actual fixed footer height, including wrapping and font changes.
+function updateFooterSpace() {
+  if (!footer) return;
+  document.documentElement.style.setProperty(
+    "--footer-height",
+    `${Math.ceil(footer.getBoundingClientRect().height)}px`,
+  );
+}
+updateFooterSpace();
+if (footer && "ResizeObserver" in window) {
+  new ResizeObserver(updateFooterSpace).observe(footer);
+} else {
+  window.addEventListener("resize", updateFooterSpace);
+  document.fonts?.ready.then(updateFooterSpace);
+}
 function setMenu(open, restoreFocus = true) {
   document.body.classList.toggle("menu-open", open);
   menuButton?.setAttribute("aria-expanded", String(open));
