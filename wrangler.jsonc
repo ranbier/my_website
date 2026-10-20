@@ -3,12 +3,13 @@
   "name": "dmdnot-website",
   "compatibility_date": "2025-09-27",
   "observability": {
-    "enabled": true
+    "enabled": true,
+  },
+  "build": {
+    "command": "npm run build",
   },
   "assets": {
-    "directory": "."
+    "directory": "./dist",
   },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  "compatibility_flags": ["nodejs_compat"],
 }

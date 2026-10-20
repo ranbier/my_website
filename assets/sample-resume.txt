@@ -1,0 +1,25 @@
+dmdnot — SAMPLE RÉSUMÉ
+Design edition 001
+
+This is a downloadable placeholder, not a real résumé.
+
+Replace this file with your own résumé PDF, then update
+site.resume.url and site.resume.label in src/content.js.
+
+NAME
+Your name
+
+INTRODUCTION
+Your short introduction
+
+EXPERIENCE
+Your verified experience
+
+SELECTED WORK
+Your projects
+
+SKILLS
+Your technical skills
+
+CONTACT
+Your contact information

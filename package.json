@@ -1,0 +1,16 @@
+{
+  "name": "dmdnot-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A static, data-driven engineering portfolio design edition.",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/dev.mjs --preview",
+    "check": "node --test tests/site.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
