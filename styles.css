@@ -312,19 +312,24 @@ main {
 .circle-link:hover {
   background: var(--surface);
 }
+[data-page="home"] main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .home-hero {
-  padding-block: 80px 64px;
+  padding-block: 48px;
 }
 .hero-copy {
   max-width: 100%;
 }
 .hero-copy h1 {
-  font-size: 52px;
+  font-size: 56px;
   line-height: 1.13;
   letter-spacing: -0.05em;
 }
 .hero-description {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.7;
   margin-top: 6px;
 }
@@ -915,13 +920,13 @@ main {
     gap: 12px;
   }
   .home-hero {
-    padding-block: 32px 40px;
+    padding-block: 32px;
   }
   .hero-copy h1 {
-    font-size: clamp(36px, 9vw, 48px);
+    font-size: clamp(38px, 9.5vw, 52px);
   }
   .hero-description {
-    font-size: 12px;
+    font-size: 13px;
     margin-top: 6px;
   }
   .hero-actions {
@@ -1096,12 +1101,12 @@ main {
 }
 .hero-name {
   margin-top: 20px;
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1.4;
   color: var(--text);
 }
 .hero-bio {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.8;
 }
 .publication-title-link {
@@ -1141,11 +1146,11 @@ main {
     font-size: 20px;
   }
   .hero-name {
-    font-size: 24px;
+    font-size: 26px;
     margin-top: 16px;
   }
   .hero-bio {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.75;
   }
   .cta-row h2 {
