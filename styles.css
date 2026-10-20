@@ -313,7 +313,6 @@ main {
   background: var(--surface);
 }
 [data-page="home"] main {
-  --home-offset: 132px;
   flex: 1 0 0;
   min-height: min-content;
   display: flex;
@@ -322,11 +321,13 @@ main {
 [data-page="home"] main::before,
 [data-page="home"] main::after {
   content: "";
-  flex: 1 1 0;
+}
+/* Match the reference: split the available space above/below the intro 35:65. */
+[data-page="home"] main::before {
+  flex: 7 1 0;
 }
 [data-page="home"] main::after {
-  /* Keep this space flexible and exclude it from the intrinsic page height. */
-  flex-basis: calc(0% + var(--home-offset) * 2);
+  flex: 13 1 0;
 }
 .home-hero {
   flex-shrink: 0;
@@ -930,9 +931,6 @@ main {
   .nav-inner {
     width: calc(100% - 48px);
     gap: 12px;
-  }
-  [data-page="home"] main {
-    --home-offset: 88px;
   }
   .hero-copy h1 {
     font-size: clamp(38px, 9.5vw, 52px);
